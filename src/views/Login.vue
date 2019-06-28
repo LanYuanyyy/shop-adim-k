@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   data() {
@@ -49,10 +49,10 @@ export default {
             trigger: "blur"
           },
           {
-            min:5,
-            max:12,
-            message:'用户名必须5-12字符之间',
-            trigger:'change'
+            min: 5,
+            max: 12,
+            message: "用户名必须5-12字符之间",
+            trigger: "change"
           }
         ],
         password: [
@@ -62,10 +62,10 @@ export default {
             trigger: "blur"
           },
           {
-            min:6,
-            max:12,
-            message:'密码必须是6-12位',
-            trigger:'change'
+            min: 6,
+            max: 12,
+            message: "密码必须是6-12位",
+            trigger: "change"
           }
         ]
       }
@@ -76,15 +76,21 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           axios({
-            url:'http://localhost:8888/api/private/v1/Login',
-            method:'post',
+            url: "http://localhost:8888/api/private/v1/Login",
+            method: "post",
             data: this.form
-          }).then(res => {
+          }).then(({data:{data,meta}}) => {
             // console.log(res)
-            if(res.data.meta.status === 200) {
-              // console.log(res.data.meta.msg)
+            if (meta.status === 200) {
+            //   console.log(res.data);
               // 编程式导航跳转页面
-              this.$router.push("./home")
+
+              // 登陆成功之后，服务器端会返回一个token
+              // 我们需要将这个token保存到本地
+              // 保存到localstorage中
+              localStorage.setItem('token', data.token);
+
+              this.$router.push("/home");
             }
           })
         } else {
