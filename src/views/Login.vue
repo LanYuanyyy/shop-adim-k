@@ -32,12 +32,14 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
       form: {
-        username: "",
-        password: ""
+        username: "admin",
+        password: "123456"
       },
       formRules: {
         username: [
@@ -73,7 +75,18 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert("submit!");
+          axios({
+            url:'http://localhost:8888/api/private/v1/Login',
+            method:'post',
+            data: this.form
+          }).then(res => {
+            // console.log(res)
+            if(res.data.meta.status === 200) {
+              // console.log(res.data.meta.msg)
+              // 编程式导航跳转页面
+              this.$router.push("./home")
+            }
+          })
         } else {
           return false;
         }
