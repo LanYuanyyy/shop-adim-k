@@ -19,18 +19,21 @@
     <el-container>
       <el-aside width="200px">
         <el-menu
+          :default-openeds="$router.path"
           default-active="2"
           class="el-menu-vertical-demo"
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#ffd04b"
+          :unique-opened="true"
+          :router="true"
         >
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>用户管理</span>
             </template>
-            <el-menu-item>
+            <el-menu-item index="/user">
               <i class="el-icon-menu"></i>
               <span>用户管理</span>
             </el-menu-item>
@@ -81,7 +84,7 @@
             </el-menu-item>
           </el-submenu>
 
-          <el-submenu index="4">
+          <el-submenu index="5">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>数据统计</span>
@@ -91,10 +94,11 @@
               <span>数据报表</span>
             </el-menu-item>
           </el-submenu>
-          
         </el-menu>
       </el-aside>
-      <el-main>Main</el-main>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
