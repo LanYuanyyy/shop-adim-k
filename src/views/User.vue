@@ -5,8 +5,8 @@
     <el-table-column prop="mobile" label="电话"></el-table-column>
 
     <el-table-column label="用户状态">
-      <template v-show="{row}">
-        <el-switch active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+      <template v-slot="{row}">
+        <el-switch v-model="row.type" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
       </template>
     </el-table-column>
 
